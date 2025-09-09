@@ -25,7 +25,6 @@ switch ($method) {
         break;
 
     // USERS
-
     case 'POST':
         $table = $input['table'];
         if ($table == "user") {
@@ -48,18 +47,33 @@ switch ($method) {
     case 'PUT':
         $id = $_GET['id'];
         $table = $input['table'];
-        $name = $input['name'];
-        $email = $input['email'];
-        $conn->query("UPDATE $table SET name='$name',
-                     email='$email', age=$age WHERE id=$id");
-        echo json_encode(["message" => "User updated successfully"]);
+        if ($table == "user") {
+            $name = $input['name'];
+            $email = $input['email'];
+            $conn->query("UPDATE user SET name='$name',
+                        email='$email', age=$age WHERE id=$id");
+            echo json_encode(["message" => "User updated successfully"]);
+        }
+        if ($table == "contact") {
+            $name = $input['name'];
+            $email = $input['email'];
+            $email = $input['phone'];
+            $conn->query("UPDATE contact (name, email, phone) SET name='$name', email='$email', phone='$phone' WHERE id='$id'");
+            echo json_encode(["message" => "Contact updated successfully"]);
+        }
         break;
 
     case 'DELETE':
         $id = $_GET['id'];
         $table = $input['table'];
-        $conn->query("DELETE FROM $table WHERE id=$id");
-        echo json_encode(["message" => "User deleted successfully"]);
+        if ($table == "user") {
+            $conn->query("DELETE FROM user WHERE id=$id");
+            echo json_encode(["message" => "User deleted successfully"]);
+        }
+        if ($table == "contact") {
+            $conn->query("DELETE FROM contact WHERE id=$id");
+            echo json_encode(["message" => "Contact deleted successfully"]);
+        }
         break;
 
     default:
