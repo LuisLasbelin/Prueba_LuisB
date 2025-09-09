@@ -44,7 +44,7 @@ function loadTable(loginData) {
     })
 }
 
-function getLogin(url, user, password, callback)
+function httpGetAsync(url, user, password, callback)
 {
     fetch(url, {
     method: "GET",
